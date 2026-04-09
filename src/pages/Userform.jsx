@@ -26,7 +26,7 @@ const UserForm = () => {
 
     try {
       const res = await fetch(
-        "http://localhost:8080/api/users/create",
+        "https://backend-udye.onrender.com/api/users/create",
         {
           method: "POST",
           headers: {
