@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import API_URL from '../utils/api';
 
 const OrdersContext = createContext();
 
@@ -37,7 +38,7 @@ export const OrdersProvider = ({ children }) => {
   const createOrder = async (orderDetails) => {
     try {
       // Save to backend first
-      const response = await fetch('/api/orders', {
+      const response = await fetch(`${API_URL}/api/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderDetails)
@@ -176,7 +177,7 @@ export const OrdersProvider = ({ children }) => {
     try {
       const orderToUpdate = updatedOrders.find(o => o.id === orderId);
       if (orderToUpdate) {
-        await fetch(`/api/orders/${orderId}`, {
+        await fetch(`${API_URL}/api/orders/${orderId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
@@ -211,9 +212,9 @@ export const OrdersProvider = ({ children }) => {
   // Refresh orders from backend for a specific user
   const refreshOrdersFromBackend = async (userEmail = null) => {
     try {
-      let url = '/api/orders';
+      let url = `${API_URL}/api/orders`;
       if (userEmail) {
-        url = `/api/orders/user/${encodeURIComponent(userEmail)}`;
+        url = `${API_URL}/api/orders/user/${encodeURIComponent(userEmail)}`;
       }
       
       const response = await fetch(url);
@@ -256,7 +257,7 @@ export const OrdersProvider = ({ children }) => {
 
     // Also delete from backend
     try {
-      await fetch(`/api/orders/${orderId}`, {
+      await fetch(`${API_URL}/api/orders/${orderId}`, {
         method: 'DELETE'
       });
     } catch (error) {

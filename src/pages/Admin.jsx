@@ -10,6 +10,7 @@ import { useOrders } from '../context/OrdersContext';
 import { useUsers } from '../context/UsersContext';
 import { useChat } from '../context/ChatContext';
 import { useToast } from '../components/Toast';
+import API_URL from '../utils/api';
 
 const Admin = () => {
   const { user, isLoggedIn } = useAuth();
@@ -152,7 +153,7 @@ const Admin = () => {
   useEffect(() => {
     const loadUsersFromBackend = async () => {
       try {
-        const response = await fetch('/api/users');
+        const response = await fetch(`${API_URL}/api/users`);
         if (response.ok) {
           const backendUsers = await response.json();
           // Merge with local users (backend users take precedence for admin)
@@ -311,7 +312,7 @@ const Admin = () => {
         
         if (isMongoId && !userId.startsWith('user-')) {
           // Update existing user in backend
-          const response = await fetch(`/api/users/${userId}`, {
+          const response = await fetch(`${API_URL}/api/users/${userId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userForm)
@@ -332,7 +333,7 @@ const Admin = () => {
         }
       } else {
         // Add new user - call backend API
-        const response = await fetch('/api/users', {
+        const response = await fetch(`${API_URL}/api/users`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(userForm)
@@ -375,7 +376,7 @@ const Admin = () => {
         
         if (mongoId && !userId.startsWith('user-')) {
           // Try to delete from backend
-          const response = await fetch(`/api/users/${mongoId}`, {
+          const response = await fetch(`${API_URL}/api/users/${mongoId}`, {
             method: 'DELETE'
           });
           if (response.ok) {

@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect, useRef } from 'react';
+import API_URL from '../utils/api';
 
 const ChatContext = createContext();
 
@@ -117,7 +118,7 @@ export const ChatProvider = ({ children }) => {
     const loadChats = async () => {
       try {
         // Try to load from backend
-        const response = await fetch('/api/chat');
+        const response = await fetch(`${API_URL}/api/chat`);
         if (response.ok) {
           const backendChats = await response.json();
           if (backendChats.length > 0) {
@@ -213,7 +214,7 @@ export const ChatProvider = ({ children }) => {
     
     // Save to backend
     try {
-      await fetch('/api/chat', {
+      await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -259,7 +260,7 @@ export const ChatProvider = ({ children }) => {
     
     // Save message to backend
     try {
-      await fetch(`/api/chat/${conversationId}/message`, {
+      await fetch(`${API_URL}/api/chat/${conversationId}/message`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -311,7 +312,7 @@ export const ChatProvider = ({ children }) => {
         }));
         
         // Save bot message to backend
-        fetch(`/api/chat/${conversationId}/message`, {
+        fetch(`${API_URL}/api/chat/${conversationId}/message`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -387,7 +388,7 @@ export const ChatProvider = ({ children }) => {
     
     // Delete from backend
     try {
-      await fetch(`/api/chat/${conversationId}`, {
+      await fetch(`${API_URL}/api/chat/${conversationId}`, {
         method: 'DELETE'
       });
     } catch (error) {

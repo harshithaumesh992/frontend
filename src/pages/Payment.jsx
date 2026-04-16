@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useOrders } from '../context/OrdersContext';
 import { useToast } from '../components/Toast';
+import API_URL from '../utils/api';
 
 const Payment = () => {
   const { user, isLoggedIn } = useAuth();
@@ -211,7 +212,7 @@ const Payment = () => {
       const amount = calculateTotal();
       
       // Create order on backend
-      const response = await fetch('/api/create-order', {
+      const response = await fetch(`${API_URL}/api/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount })

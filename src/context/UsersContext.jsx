@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import API_URL from '../utils/api';
 
 const UsersContext = createContext();
 
@@ -46,7 +47,7 @@ export const UsersProvider = ({ children }) => {
   useEffect(() => {
     const loadUsers = async () => {
       try {
-        const response = await fetch('/api/users');
+        const response = await fetch(`${API_URL}/api/users`);
         if (response.ok) {
           const backendUsers = await response.json();
           if (backendUsers.length > 0) {
@@ -106,7 +107,7 @@ export const UsersProvider = ({ children }) => {
   const addUser = async (userData) => {
     try {
       // Save to backend first
-      const response = await fetch('/api/users', {
+      const response = await fetch(`${API_URL}/api/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData)
@@ -148,7 +149,7 @@ export const UsersProvider = ({ children }) => {
       const mongoId = userToUpdate._id || userId;
       
       // Update in backend
-      const response = await fetch(`/api/users/${mongoId}`, {
+      const response = await fetch(`${API_URL}/api/users/${mongoId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updates)
@@ -191,7 +192,7 @@ export const UsersProvider = ({ children }) => {
       const mongoId = userToDelete._id || userId;
       
       // Delete from backend
-      await fetch(`/api/users/${mongoId}`, {
+      await fetch(`${API_URL}/api/users/${mongoId}`, {
         method: 'DELETE'
       });
     } catch (error) {

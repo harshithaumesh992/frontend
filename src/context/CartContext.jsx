@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useAuth } from './AuthContext';
+import API_URL from '../utils/api';
 
 const CartContext = createContext();
 
@@ -26,7 +27,7 @@ export const CartProvider = ({ children }) => {
         // User is logged in, try to load from backend
         try {
           const userId = user.id || user._id;
-          const response = await fetch(`/api/cart/${userId}`);
+          const response = await fetch(`${API_URL}/api/cart/${userId}`);
           if (response.ok) {
             const cart = await response.json();
             if (cart.items && cart.items.length > 0) {
@@ -70,7 +71,7 @@ export const CartProvider = ({ children }) => {
       const saveCartToBackend = async () => {
         try {
           const userId = user.id || user._id;
-          await fetch('/api/cart', {
+          await fetch(`${API_URL}/api/cart`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ userId, items: cartItems })
@@ -128,7 +129,7 @@ export const CartProvider = ({ children }) => {
       const clearBackendCart = async () => {
         try {
           const userId = user.id || user._id;
-          await fetch(`/api/cart/${userId}`, {
+          await fetch(`${API_URL}/api/cart/${userId}`, {
             method: 'DELETE'
           });
         } catch (error) {

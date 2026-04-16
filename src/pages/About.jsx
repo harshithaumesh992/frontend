@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import API_URL from '../utils/api';
 
 const About = () => {
 
   const [teamMembers, setTeamMembers] = useState([]);
 
   useEffect(() => {
-    fetch("/api/team")
+    fetch(`${API_URL}/api/team`)
       .then(res => res.json())
       .then(data => setTeamMembers(data))
       .catch(err => console.log(err));

@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../components/Toast';
+import backendAPI_URL from '../utils/api';
 
-const API_URL = '/api/products';
+const API_URL = `${backendAPI_URL}/api/products`;
 
 const Products = () => {
   const [activeTab, setActiveTab] = useState('user');
